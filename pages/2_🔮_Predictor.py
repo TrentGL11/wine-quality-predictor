@@ -1,5 +1,5 @@
 """
-Wine Quality Predictor — The star feature
+Wine Quality Predictor  -  The star feature
 Predict wine quality with SHAP explanations and preset profiles.
 """
 import streamlit as st
@@ -134,7 +134,7 @@ with result_cols[1]:
 
 with result_cols[2]:
     # SHAP waterfall
-    st.markdown("**SHAP Explanation** — What drove this prediction?")
+    st.markdown("**SHAP Explanation**  -  What drove this prediction?")
     explainer = shap.TreeExplainer(model)
     shap_values = explainer.shap_values(X_input)
 

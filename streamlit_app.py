@@ -1,5 +1,5 @@
 """
-Red Wine Quality Analysis — Dashboard
+Red Wine Quality Analysis  -  Dashboard
 Senior Data Scientist Case Study | UNIFI Credit
 Trent Lemkus, Ph.D.
 """
@@ -50,14 +50,14 @@ feature_cols = [c for c in df.columns if c != "quality"]
 
 # Header
 st.markdown('<p class="main-header">🍷 Red Wine Quality Analysis</p>', unsafe_allow_html=True)
-st.markdown('<p class="sub-header">Senior Data Scientist Case Study — Trent Lemkus, Ph.D. | UNIFI Credit</p>', unsafe_allow_html=True)
+st.markdown('<p class="sub-header">Senior Data Scientist Case Study  -  Trent Lemkus, Ph.D. | UNIFI Credit</p>', unsafe_allow_html=True)
 st.markdown("---")
 
 # Key Metrics
 col1, col2, col3, col4 = st.columns(4)
 col1.metric("Samples", f"{len(df):,}")
 col2.metric("Features", len(feature_cols))
-col3.metric("Quality Range", f"{df['quality'].min()} – {df['quality'].max()}")
+col3.metric("Quality Range", f"{df['quality'].min()} - {df['quality'].max()}")
 col4.metric("Median Quality", f"{df['quality'].median():.0f}")
 
 st.markdown("---")

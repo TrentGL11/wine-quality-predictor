@@ -1,5 +1,5 @@
 """
-Data Explorer — Interactive scatter plots and distributions
+Data Explorer  -  Interactive scatter plots and distributions
 """
 import streamlit as st
 import pandas as pd
@@ -81,7 +81,7 @@ fig_pair = px.scatter_matrix(
     df, dimensions=top_features + ["quality"],
     color="quality", color_continuous_scale="RdYlGn",
     opacity=0.4, height=700,
-    title="Scatter Matrix — Top 4 Features Most Correlated with Quality"
+    title="Scatter Matrix  -  Top 4 Features Most Correlated with Quality"
 )
 fig_pair.update_traces(diagonal_visible=False, marker=dict(size=3))
 st.plotly_chart(fig_pair, use_container_width=True)

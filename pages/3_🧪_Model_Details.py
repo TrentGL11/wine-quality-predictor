@@ -1,5 +1,5 @@
 """
-Model Details — Performance metrics, feature importance, and methodology
+Model Details  -  Performance metrics, feature importance, and methodology
 """
 import streamlit as st
 import pandas as pd
@@ -139,9 +139,9 @@ st.markdown("""
 
 **Validation:** 5-fold stratified cross-validation
 
-**Target:** Binary classification — Good (quality ≥ 6) vs Bad (quality < 6)
+**Target:** Binary classification  -  Good (quality ≥ 6) vs Bad (quality < 6)
 
 **Interpretability:** SHAP (SHapley Additive exPlanations) values provide individual prediction explanations, showing which features contribute most to each prediction.
 
-**Reference:** Cortez, P., Cerdeira, A., Almeida, F., Matos, T., & Reis, J. (2009). *Modeling wine preferences by data mining from physicochemical properties.* Decision Support Systems, 47(4), 547–553.
+**Reference:** Cortez, P., Cerdeira, A., Almeida, F., Matos, T., & Reis, J. (2009). *Modeling wine preferences by data mining from physicochemical properties.* Decision Support Systems, 47(4), 547-553.
 """)
