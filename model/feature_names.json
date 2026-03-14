@@ -1,0 +1,98 @@
+{
+  "feature_names": [
+    "fixed acidity",
+    "volatile acidity",
+    "citric acid",
+    "residual sugar",
+    "chlorides",
+    "free sulfur dioxide",
+    "total sulfur dioxide",
+    "density",
+    "pH",
+    "sulphates",
+    "alcohol"
+  ],
+  "feature_stats": {
+    "fixed acidity": {
+      "min": 4.6,
+      "max": 15.9,
+      "mean": 8.31963727329581,
+      "median": 7.9,
+      "std": 1.7410963181276953
+    },
+    "volatile acidity": {
+      "min": 0.12,
+      "max": 1.58,
+      "mean": 0.5278205128205128,
+      "median": 0.52,
+      "std": 0.17905970415353537
+    },
+    "citric acid": {
+      "min": 0.0,
+      "max": 1.0,
+      "mean": 0.2709756097560976,
+      "median": 0.26,
+      "std": 0.19480113740531857
+    },
+    "residual sugar": {
+      "min": 0.9,
+      "max": 15.5,
+      "mean": 2.53880550343965,
+      "median": 2.2,
+      "std": 1.4099280595072798
+    },
+    "chlorides": {
+      "min": 0.012,
+      "max": 0.611,
+      "mean": 0.08746654158849279,
+      "median": 0.079,
+      "std": 0.0470653020100901
+    },
+    "free sulfur dioxide": {
+      "min": 1.0,
+      "max": 72.0,
+      "mean": 15.874921826141339,
+      "median": 14.0,
+      "std": 10.460156969809725
+    },
+    "total sulfur dioxide": {
+      "min": 6.0,
+      "max": 289.0,
+      "mean": 46.46779237023139,
+      "median": 38.0,
+      "std": 32.895324478299074
+    },
+    "density": {
+      "min": 0.99007,
+      "max": 1.00369,
+      "mean": 0.9967466791744841,
+      "median": 0.99675,
+      "std": 0.0018873339538425554
+    },
+    "pH": {
+      "min": 2.74,
+      "max": 4.01,
+      "mean": 3.3111131957473416,
+      "median": 3.31,
+      "std": 0.15438646490354277
+    },
+    "sulphates": {
+      "min": 0.33,
+      "max": 2.0,
+      "mean": 0.6581488430268917,
+      "median": 0.62,
+      "std": 0.16950697959010996
+    },
+    "alcohol": {
+      "min": 8.4,
+      "max": 14.9,
+      "mean": 10.422983114446529,
+      "median": 10.2,
+      "std": 1.0656675818473946
+    }
+  },
+  "cv_accuracy": 0.7998452194357366,
+  "cv_f1": 0.8099012861456071,
+  "cv_auc": 0.8680007807171352,
+  "test_auc": 0.8865340083990738
+}
