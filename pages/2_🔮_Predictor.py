@@ -1,6 +1,5 @@
 """
-Wine Quality Predictor  -  The star feature
-Predict wine quality with SHAP explanations and preset profiles.
+Wine Quality Predictor  -  Interactive prediction with coefficient explanations
 """
 import streamlit as st
 import pandas as pd
@@ -8,8 +7,6 @@ import numpy as np
 import pickle
 import json
 import plotly.graph_objects as go
-import shap
-import matplotlib.pyplot as plt
 
 st.set_page_config(page_title="Wine Quality Predictor", page_icon="🔮", layout="wide")
 
@@ -37,30 +34,30 @@ st.title("🔮 Wine Quality Predictor")
 st.markdown("Adjust the physicochemical properties below to predict wine quality. Use the **preset profiles** to quickly compare good, average, and poor wines.")
 st.markdown("---")
 
-# Preset wine profiles (derived from dataset quartiles)
+# Preset wine profiles (derived from dataset quartiles, 8 features only)
 PRESETS = {
     "🏆 Excellent Wine": {
-        "fixed acidity": 8.0, "volatile acidity": 0.35, "citric acid": 0.45,
-        "residual sugar": 2.2, "chlorides": 0.065, "free sulfur dioxide": 14.0,
-        "total sulfur dioxide": 28.0, "density": 0.995, "pH": 3.25,
+        "volatile acidity": 0.35, "citric acid": 0.45,
+        "chlorides": 0.065, "free sulfur dioxide": 14.0,
+        "total sulfur dioxide": 28.0, "pH": 3.25,
         "sulphates": 0.78, "alcohol": 12.5
     },
     "👍 Above Average Wine": {
-        "fixed acidity": 7.9, "volatile acidity": 0.45, "citric acid": 0.35,
-        "residual sugar": 2.3, "chlorides": 0.075, "free sulfur dioxide": 15.0,
-        "total sulfur dioxide": 40.0, "density": 0.996, "pH": 3.3,
+        "volatile acidity": 0.45, "citric acid": 0.35,
+        "chlorides": 0.075, "free sulfur dioxide": 15.0,
+        "total sulfur dioxide": 40.0, "pH": 3.3,
         "sulphates": 0.65, "alcohol": 11.0
     },
     "😐 Average Wine": {
-        "fixed acidity": 7.2, "volatile acidity": 0.55, "citric acid": 0.25,
-        "residual sugar": 2.5, "chlorides": 0.08, "free sulfur dioxide": 14.0,
-        "total sulfur dioxide": 50.0, "density": 0.997, "pH": 3.32,
+        "volatile acidity": 0.55, "citric acid": 0.25,
+        "chlorides": 0.08, "free sulfur dioxide": 14.0,
+        "total sulfur dioxide": 50.0, "pH": 3.32,
         "sulphates": 0.58, "alcohol": 10.0
     },
     "👎 Poor Wine": {
-        "fixed acidity": 7.5, "volatile acidity": 0.85, "citric acid": 0.05,
-        "residual sugar": 2.0, "chlorides": 0.095, "free sulfur dioxide": 8.0,
-        "total sulfur dioxide": 60.0, "density": 0.998, "pH": 3.4,
+        "volatile acidity": 0.85, "citric acid": 0.05,
+        "chlorides": 0.095, "free sulfur dioxide": 8.0,
+        "total sulfur dioxide": 60.0, "pH": 3.4,
         "sulphates": 0.52, "alcohol": 9.2
     }
 }
@@ -98,9 +95,10 @@ st.markdown("---")
 
 # Prediction
 X_input = np.array([[input_values[f] for f in feature_names]])
-pred_proba = model.predict_proba(X_input)[0]
-pred_class = model.predict(X_input)[0]
-quality_label = "Good (≥6)" if pred_class == 1 else "Bad (<6)"
+X_scaled = scaler.transform(X_input)
+pred_proba = model.predict_proba(X_scaled)[0]
+pred_class = model.predict(X_scaled)[0]
+quality_label = "Good (>=6)" if pred_class == 1 else "Bad (<6)"
 confidence = max(pred_proba) * 100
 
 # Display results
@@ -117,7 +115,7 @@ with result_cols[1]:
     # Probability bar chart
     fig_prob = go.Figure()
     fig_prob.add_trace(go.Bar(
-        x=["Bad (<6)", "Good (≥6)"],
+        x=["Bad (<6)", "Good (>=6)"],
         y=pred_proba,
         marker_color=["#d32f2f", "#388e3c"],
         text=[f"{p:.1%}" for p in pred_proba],
@@ -133,24 +131,46 @@ with result_cols[1]:
     st.plotly_chart(fig_prob, use_container_width=True)
 
 with result_cols[2]:
-    # SHAP waterfall
-    st.markdown("**SHAP Explanation**  -  What drove this prediction?")
-    explainer = shap.TreeExplainer(model)
-    shap_values = explainer.shap_values(X_input)
+    # Coefficient contribution table
+    st.markdown("**Coefficient Contributions** - What drove this prediction?")
+    coefficients = model.coef_[0]
+    intercept = model.intercept_[0]
+    scaled_values = X_scaled[0]
 
-    fig_shap, ax = plt.subplots(figsize=(8, 5))
-    shap.plots.waterfall(
-        shap.Explanation(
-            values=shap_values[0],
-            base_values=explainer.expected_value,
-            data=X_input[0],
-            feature_names=feature_names
-        ),
-        show=False
+    contributions = []
+    for j, feat in enumerate(feature_names):
+        contrib = scaled_values[j] * coefficients[j]
+        contributions.append({
+            "Feature": feat,
+            "Standardised Value": round(scaled_values[j], 3),
+            "Coefficient": round(coefficients[j], 3),
+            "Contribution (log-odds)": round(contrib, 3)
+        })
+
+    contrib_df = pd.DataFrame(contributions)
+    contrib_df = contrib_df.reindex(
+        contrib_df["Contribution (log-odds)"].abs().sort_values(ascending=False).index
     )
-    plt.tight_layout()
-    st.pyplot(fig_shap)
-    plt.close()
+
+    # Style: green for positive, red for negative contributions
+    def color_contribution(val):
+        if val > 0:
+            return "color: #388e3c; font-weight: bold"
+        elif val < 0:
+            return "color: #d32f2f; font-weight: bold"
+        return ""
+
+    styled = contrib_df.style.map(
+        color_contribution, subset=["Contribution (log-odds)"]
+    ).format({
+        "Standardised Value": "{:.3f}",
+        "Coefficient": "{:.3f}",
+        "Contribution (log-odds)": "{:+.3f}"
+    })
+    st.dataframe(styled, use_container_width=True, hide_index=True)
+
+    total_log_odds = intercept + sum(c["Contribution (log-odds)"] for c in contributions)
+    st.caption(f"Intercept: {intercept:+.3f} | Total log-odds: {total_log_odds:+.3f}")
 
 # Feature comparison table
 st.markdown("---")
