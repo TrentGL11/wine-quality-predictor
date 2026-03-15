@@ -34,36 +34,39 @@ st.title("🔮 Wine Quality Predictor")
 st.markdown("Adjust the physicochemical properties below to predict wine quality. Use the **preset profiles** to quickly compare good, average, and poor wines.")
 st.markdown("---")
 
-# Preset wine profiles (derived from dataset quartiles, 8 features only)
+# Preset wine profiles - median feature values per quality tier from the dataset
+# Excellent: quality 7-8 (n=217), Above Average: quality 6 (n=638),
+# Average: quality 5 (n=681), Poor: quality 3-4 (n=63)
 PRESETS = {
     "🏆 Excellent Wine": {
-        "volatile acidity": 0.35, "citric acid": 0.45,
-        "chlorides": 0.065, "free sulfur dioxide": 14.0,
-        "total sulfur dioxide": 28.0, "pH": 3.25,
-        "sulphates": 0.78, "alcohol": 12.5
+        "volatile acidity": 0.370, "citric acid": 0.400,
+        "chlorides": 0.073, "free sulfur dioxide": 11.0,
+        "total sulfur dioxide": 27.0, "pH": 3.27,
+        "sulphates": 0.740, "alcohol": 11.6
     },
     "👍 Above Average Wine": {
-        "volatile acidity": 0.45, "citric acid": 0.35,
-        "chlorides": 0.075, "free sulfur dioxide": 15.0,
-        "total sulfur dioxide": 40.0, "pH": 3.3,
-        "sulphates": 0.65, "alcohol": 11.0
+        "volatile acidity": 0.490, "citric acid": 0.260,
+        "chlorides": 0.078, "free sulfur dioxide": 14.0,
+        "total sulfur dioxide": 35.0, "pH": 3.32,
+        "sulphates": 0.640, "alcohol": 10.5
     },
     "😐 Average Wine": {
-        "volatile acidity": 0.55, "citric acid": 0.25,
-        "chlorides": 0.08, "free sulfur dioxide": 14.0,
-        "total sulfur dioxide": 50.0, "pH": 3.32,
-        "sulphates": 0.58, "alcohol": 10.0
+        "volatile acidity": 0.580, "citric acid": 0.230,
+        "chlorides": 0.081, "free sulfur dioxide": 15.0,
+        "total sulfur dioxide": 47.0, "pH": 3.30,
+        "sulphates": 0.580, "alcohol": 9.7
     },
     "👎 Poor Wine": {
-        "volatile acidity": 0.85, "citric acid": 0.05,
-        "chlorides": 0.095, "free sulfur dioxide": 8.0,
-        "total sulfur dioxide": 60.0, "pH": 3.4,
-        "sulphates": 0.52, "alcohol": 9.2
+        "volatile acidity": 0.680, "citric acid": 0.080,
+        "chlorides": 0.080, "free sulfur dioxide": 9.0,
+        "total sulfur dioxide": 26.0, "pH": 3.38,
+        "sulphates": 0.560, "alcohol": 10.0
     }
 }
 
 # Preset buttons
 st.subheader("Quick Presets")
+st.caption("Each preset uses the median feature values for wines in that quality tier (Excellent: quality 7-8, Above Average: 6, Average: 5, Poor: 3-4).")
 preset_cols = st.columns(len(PRESETS))
 selected_preset = None
 for i, (name, values) in enumerate(PRESETS.items()):
