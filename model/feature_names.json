@@ -67,14 +67,13 @@
       "std": 1.0656675818473946
     }
   },
-  "cv_accuracy": 0.7410337165596794,
-  "cv_f1": 0.7549519423794182,
-  "cv_auc": 0.8153192332997105,
+  "cv_accuracy": 0.741193204880038,
+  "cv_f1": 0.7551175350334046,
+  "cv_auc": 0.8152922012235905,
   "test_accuracy": 0.759375,
   "test_f1": 0.7768115942028986,
-  "test_auc": 0.8090126223899964,
+  "test_auc": 0.8092485549132946,
   "model_type": "Logistic Regression",
   "n_features": 8,
-  "variable_selection": "11 -> 9 (VIF) -> 8 (sign stability)",
-  "training_data": "Full dataset (n=1,599) after test evaluation on 80/20 split"
+  "variable_selection": "11 -> 9 (VIF) -> 8 (sign stability)"
 }
