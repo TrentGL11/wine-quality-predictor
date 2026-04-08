@@ -75,5 +75,36 @@
   "test_auc": 0.8092485549132946,
   "model_type": "Logistic Regression",
   "n_features": 8,
-  "variable_selection": "11 -> 9 (VIF) -> 8 (sign stability)"
+  "n_training_samples": 1599,
+  "coefficients": {
+    "volatile acidity": -0.5558678205086828,
+    "citric acid": -0.15002370358823913,
+    "chlorides": -0.215236166522117,
+    "free sulfur dioxide": 0.2533968117726835,
+    "total sulfur dioxide": -0.5703282218956106,
+    "pH": -0.17329498474884353,
+    "sulphates": 0.46467527560934124,
+    "alcohol": 0.9668540097334591
+  },
+  "intercept": 0.24113444810074247,
+  "scaler_mean": {
+    "volatile acidity": 0.5278205128205128,
+    "citric acid": 0.2709756097560976,
+    "chlorides": 0.08746654158849279,
+    "free sulfur dioxide": 15.874921826141339,
+    "total sulfur dioxide": 46.46779237023139,
+    "pH": 3.3111131957473416,
+    "sulphates": 0.6581488430268917,
+    "alcohol": 10.422983114446529
+  },
+  "scaler_std": {
+    "volatile acidity": 0.17900370424469014,
+    "citric acid": 0.19474021445233364,
+    "chlorides": 0.04705058260331571,
+    "free sulfur dioxide": 10.45688561493072,
+    "total sulfur dioxide": 32.88503665178374,
+    "pH": 0.15433818141060165,
+    "sulphates": 0.16945396724179546,
+    "alcohol": 1.0653343003437483
+  }
 }
